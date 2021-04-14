@@ -13,6 +13,10 @@ Vue.js/Nuxt.js<br /><br /> -Implementation of JWT available while using the infu
 <h4>DO NOT CHANGE RECEIVER1 ADDRESS !!! THIS IS HOW MINERS GAIN MINING REWARDS/LIQUIDITY <br>
  <p>:) <3 <(^^^)> </h4></p> <br />
 <br />
+************************************
+************************************
+************************************
+************************************
 <h3>BACKEND</h3>
 <h7>PYTHON</h7>
 
@@ -48,7 +52,10 @@ mint_key = '' <- Generate key for address<br />
 
 </h4> <br />
 <br /><br /><br /><br /><br />
-
+************************************
+************************************
+************************************
+************************************
 <h3>FRONTEND</h3>
 
 <h5>PYTHON -> NUXT.JS</h5>
@@ -87,7 +94,10 @@ mint_key = '' <- generate key for address<br />
 : Route-> connected_node: <h4>-Allows miner to ensure their node is connected to network via POSTMAN/INSOMNIA
 
 </h4><br /><br /><br />
-
+************************************
+************************************
+************************************
+************************************
 
 
 <br /><br /><br />
