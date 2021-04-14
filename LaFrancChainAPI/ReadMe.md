@@ -2,8 +2,7 @@ python --version >=3.6 or <= 3.8
 Vue.js/Nuxt.js<br /><br /> -Implementation of JWT available while using the infura node for web3 transactions.
 <br /><br /><br /><br />
 -- Necessary Python imports:
-
-- flask, flask_cors, web3 <br /><br /><br /><br />
+### pip install flask, flask_cors, web3 <br /><br /><br /><br />
 
 <h1>>Make Sure Ports are valid above port 8685 via Flask</h1>
 
