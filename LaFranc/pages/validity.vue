@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>{{message}}</h1>
-    <p>Mint LaFranc</p>
+    <p>Chain Validity</p>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
   },
   head () {
     return {
-      title: 'Mine LaFranc Blockchain'
+      title: 'LaFranc Blockchain Validity'
     }
   }
 }
