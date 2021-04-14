@@ -17,7 +17,7 @@ Vue.js/Nuxt.js<br /><br /> -Implementation of JWT available while using the infu
 <h7>PYTHON</h7>
 
 
-<p>Routing: </p> <br /><br />
+<p>Routing </p> <br /><br />
 
 : Route-> create_block:<h4>-Provides Logic for the existing blockchain:</h4>
 mint_acct ='' <- Must generate an address<br />
