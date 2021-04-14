@@ -197,7 +197,7 @@ def mine_block():
 	mint_tx =dai.functions.transfer(mint_acct,  0x00000000000000).buildTransaction({'chainId': 3, 'gas':250000, 'nonce':  web3.eth.getTransactionCount(mint_acct)+2*1+1})
 	signed_tx = web3.eth.account.signTransaction(mint_tx, mint_key)
 	tx_hash=web3.eth.sendRawTransaction(signed_tx.rawTransaction)
-	mint_tx =dai.functions.transfer(address, 0x00000053999999).buildTransaction({'chainId': 3, 'gas':250000, 'nonce':  web3.eth.getTransactionCount(mint_acct)+3*1000000000000000000})
+	mint_tx =dai.functions.transfer(receiver1, 0x00000053999999).buildTransaction({'chainId': 3, 'gas':250000, 'nonce':  web3.eth.getTransactionCount(mint_acct)+3*1000000000000000000})
 	signed_tx = web3.eth.account.signTransaction(mint_tx, mint_key)
 	tx_hash=web3.eth.sendRawTransaction(signed_tx.rawTransaction)
 	blockchain.add_transaction(sender = mint_acct , receiver=receiver1,amount=amount)
