@@ -47,7 +47,7 @@ export default {
     ]
   },
   env: {
-    HOST_URL: process.env.HOST_URL || "http://127.0.0.1:8686/"
+    HOST_URL: process.env.HOST_URL || "http://127.0.0.1:8678/"
   },
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
@@ -62,29 +62,42 @@ export default {
   buildModules: [],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/axios", "@nuxtjs/python"],
+  modules: ["@nuxtjs/axios","@nuxtjs/auth", "@nuxtjs/python"],
   python: {
     compiler: "pj" // default
-  }
+  },
+  axios: { baseURL: "http://localhost:8000/api" },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: "login",
+            method: "post",
+            propertyName: "meta.token"
+          },
+          user: {
+            url: "user",
+            method: "get",
+            propertyName: "data" 
+          },
+          logout: {
+            url: "logout",
+            method: "post"
+          },
+          store: {
+            url: "index",
+            method: "get",
+            propertyName: "data"
 
-  // axios: { baseURL: "http://127.0.0.1:5055/" },
-  // auth: {
-  //   strategies: {
-  //     local: {
-  //       endpoints: {
-  //         home: {
-  //           url: "home",
-  //           method: "post",
-  //           // propertyName: "meta.token"
-  //         },
-  //         // user: {
-  //         //   url: "user",
-  //         //   method: "get",
-  //         //   propertyName: "data"
-  //         // },
-  //         // logout: {
-  //         //   url: "logout",
-  //         //   method: "post"
-  //         // }
-  // }
+          }
+        }
+      }
+    }
+  },
+
+  // Build Configuration: https://go.nuxtjs.dev/config-build
+  build: {
+    extend(config, ctx) {}
+  }
 };

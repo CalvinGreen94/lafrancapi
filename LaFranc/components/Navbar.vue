@@ -39,12 +39,11 @@
             <nuxt-link to="/replaced_chain" class="nav-link">Chain Replacements</nuxt-link>
           </li>
        </ul>
-                     <!-- <li class="nav-item">
-            <nuxt-link to="/LaFrancME" class="nav-link">Generate New Address And Private Key</nuxt-link>
-         </li>  -->
-          <!-- <li class="nav-item"> -->
-            <!-- <nuxt-link to="/LaFrancMint" class="nav-link">Mine LaFranc-></nuxt-link> -->
-          <!-- </li> -->
+                                    <ul class="navbar-nav">
+          <li class="nav-item">
+            <nuxt-link to="/login" class="nav-link">User Login/Register</nuxt-link>
+          </li>
+       </ul> 
          
         <template v-if="!authenticated">
           <ul class="navbar-nav ml-auto">
@@ -55,8 +54,13 @@
               <nuxt-link to="/LaFrancMint" class="nav-link">Mine LaFranc -->MUST HAVE API TO ACCESS NODE</nuxt-link>
             </li>
           </ul>
+          <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <nuxt-link to="/c-force" class="nav-link">C-Force</nuxt-link>
+          </li>
+       </ul>
         </template>
-        <!-- <template v-if="authenticated">
+        <template v-if="authenticated">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <a class="nav-link">{{ user.name }}</a>
@@ -65,13 +69,13 @@
               <a @click.prevent="logout" class="nav-link">Logout</a>
             </li>
           </ul>
-        </template> -->
+        </template>
       </div>
     </div>
   </nav>
 </template>
 <script>
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   methods:{
     logout() {

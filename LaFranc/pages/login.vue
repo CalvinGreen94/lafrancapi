@@ -5,12 +5,12 @@
     <br />
     <form @submit.prevent="submit">
       <div class="form-group">
-        <label>Username</label>
+        <label>Wallet Address</label>
         <input
-          v-model.trim="form.address"
+          v-model.trim="form.name"
           type="name"
           class="form-control"
-          placeholder="Username"
+          placeholder="wallet_address"
           autofocus
         />
         <!-- <small class="form-text text-danger" v-if="errors.email">{{
@@ -18,18 +18,17 @@
         }}</small> -->
       </div>
       <div class="form-group">
-        <label>Password </label>
+        <label>Private key </label>
         <input
-          v-model.trim="form.key"
+          v-model.trim="form.password"
           type="password"
           class="form-label"
-          placeholder="Password"
+          placeholder="private_key"
         />
         <!-- <small class="form-text text-danger" v-if="errors.password">{{
           errors.password[0]
         }}</small> -->
       </div>
-
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
     <br />
@@ -39,23 +38,28 @@
   </div>
 </template>
 
-<script>
-import axios from "~/plugins/axios";
 
+
+<script>
 export default {
-  async asyncData() {
-    let { data } = await axios.get("/mine_block");
-    console.log(data.data);
-    return data.data;
-  },
   middleware: ['guest'],
   data() {
     return {
       form: {
-        address: '',
-        key: ''
+        name: '',
+        password: ''
       }
     }
   },
+  methods: {
+    async submit() {
+      await this.$auth.loginWith("local", {
+        data: this.form
+      });
+      this.$router.push({
+        path: this.$route.query.redirect || "http://127.0.0.1:8000/image-upload"
+      });
+    }
+  }
 };
 </script>

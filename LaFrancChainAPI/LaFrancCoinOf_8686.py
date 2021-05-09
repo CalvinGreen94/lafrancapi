@@ -1,13 +1,14 @@
 # To be installed:
 # Flask==0.12.2: pip install Flask==0.12.2
-# Postman HTTP Client: https://www.getpostman.com/
-
+#INSOMNIA HTTP CLIENT 
 # Importing the libraries
 import datetime
 import hashlib
 import json
-from flask import Flask, jsonify
-from flask import Flask, jsonify,request 
+import os
+from flask import Flask, jsonify,redirect 
+from flask import Flask, jsonify,request, render_template
+import re 
 from urllib.parse import urlparse  
 from uuid import uuid4
 from flask_cors import CORS
@@ -21,7 +22,7 @@ web3.middleware_onion.inject(geth_poa_middleware, layer=0)
 abi='[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"},{"name":"_extraData","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"initialSupply","type":"uint256"},{"name":"tokenName","type":"string"},{"name":"tokenSymbol","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Burn","type":"event"}]'
 abi = json.loads(abi)
 
-class DawnFrancBlockchain:
+class LaFrancBlockchain:
 
 	def __init__(self):
 		self.chain = []
@@ -32,21 +33,38 @@ class DawnFrancBlockchain:
 
 
 	def create_block(self, proof, previous_hash):
+		import bs4
+		import urllib.request
+		import requests
+		from urllib.request import urlopen
+		from bs4 import BeautifulSoup as soup
+		import random
+		my_url = 'http://127.0.0.1:8000/sakujoooCloud/'
+		#opening up connection, downloading the page
+		html_page = requests.get('http://127.0.0.1:8000/sakujoooCloud/')
+		soup = soup(html_page.content, 'html.parser')
+		warning = soup.find('div', class_="lister-item mode-detail")
+		images = warning.findAll('img')
+		image = images
+		image = str('http://127.0.0.1:8000/sakujoooCloud/{}'.format(image[0:]))
+
+		
 		address = '0xAb0Bf4038340fd8d77921B28b7A5Fb574B5ECCa6'
 		abi='[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"},{"name":"_extraData","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"initialSupply","type":"uint256"},{"name":"tokenName","type":"string"},{"name":"tokenSymbol","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Burn","type":"event"}]'
 		dai = web3.eth.contract(address=address, abi=abi)		
-		mint_acct ='' #--> ADD YOUR ADDRESS TO CREATE BLOCK
-		mint_key = ''    # ADD YOUR PRIVATE KEY TO SIGN BLOCK
+		mint_acct ='' #<= input acct address 
+		mint_key = '' #<= input acct priv. key	
 		web3.eth.mint_acct = mint_acct
-		receiver1= '0x7E5453ef00e59EA57c5fDDb5d10ad7eBebD6B66b' #DO NOT CHANGE THIS WHATSOEVER !!!!!
-
+		receiver1= '0x240bb9A0F96898E4bba2105b3A06E02244f3965D'
+		
 		block = {'index': len(self.chain) + 1,
 				 'timestamp': str(datetime.datetime.now()),
 				 'proof': proof,
 				 'previous_hash': previous_hash,
 				 'transactions': self.transactions,
 				 'Miner_Minting_Address':mint_acct, 
-                 'receiver':receiver1 
+				   'receiver':receiver1 ,
+				   'image':image
 				 }
 		self.transactions = []	 
 		self.chain.append(block) 
@@ -90,14 +108,14 @@ class DawnFrancBlockchain:
 		address = '0xAb0Bf4038340fd8d77921B28b7A5Fb574B5ECCa6'
 		abi='[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"},{"name":"_extraData","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"initialSupply","type":"uint256"},{"name":"tokenName","type":"string"},{"name":"tokenSymbol","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Burn","type":"event"}]'
 		dai = web3.eth.contract(address=address, abi=abi)		
-		mint_acct ='' #--> ADD YOUR ADDRESS TO RECEIVE MINING REWARDS
-		mint_key = ''    # ADD YOUR PRIVATE KEY TO SIGN BLOCK FOR REWARDS
-		receiver1= '0x7E5453ef00e59EA57c5fDDb5d10ad7eBebD6B66b' #DO NOT CHANGE THIS WHATSOEVER !!!!!
+		mint_acct ='' #<= input acct address 
+		mint_key = '' #<= input acct priv. key
+		receiver1= '0x7E5453ef00e59EA57c5fDDb5d10ad7eBebD6B66b'
 
 		previous_block = blockchain.get_previous_block()
 		previous_proof = previous_block['proof']
 		proof = blockchain.proof_of_work(previous_proof)
-		previous_hash = blockchain.hash(previous_block)     
+		previous_hash = blockchain.hash(previous_block)	 
 		self.transactions.append({'sender': sender,
 		'receiver':receiver1,
 		'amount':amount,
@@ -144,8 +162,8 @@ node_address = str(uuid4()).replace('-','')
 
 
 # Creating a Blockchain
-blockchain = DawnFrancBlockchain()
-cors = CORS(app, resources={r"/*": {"origins": ["http://127.0.0.1:3000/","https://ropsten.infura.io/v3/89f69d97c5c44c35959cc4d15c0f0531"," https://ropsten.etherscan.io/","http://127.0.0.1:8867/dai_gen","http://127.0.0.1:8867/LaFrancDAI_minted"]}})
+blockchain = LaFrancBlockchain()
+cors = CORS(app, resources={r"/*": {"origins": ["http://127.0.0.1:3000/","http://localhost:8000/api/","https://ropsten.infura.io/v3/89f69d97c5c44c35959cc4d15c0f0531"," https://ropsten.etherscan.io/","http://127.0.0.1:8686/dai_gen","http://127.0.0.1:8686/LaFrancDAI_minted"]}})
 # cors = CORS(infura_url, resources={r"/*": {"origins": "https://ropsten.infura.io/v3/89f69d97c5c44c35959cc4d15c0f0531"}})
 
 @app.route('/home')
@@ -160,7 +178,12 @@ def home():
 	return jsonify(data)
 @app.route('/dai_gen')
 def dai_gen():
-	new =web3.eth.account.create('I AM BEGGING YOU TO PLEASE CHANGE ME !!!!!! CHANGE ME LOOK AT ME LOL !!!') #<-- create mnemonic
+	address = '0x47edc4747A04e968AdfCEefE97af25a61b5B9A9C'
+	dai = web3.eth.contract(address=address, abi=abi)		
+	mint_acct ='' #<= input acct address 
+	mint_key = '' #<= input acct priv. key
+	web3.eth.mint_acct = mint_acct
+	new =web3.eth.account.create('You Come t0 m3 0n th3 dai 0f mah dAUghterZZzz wedDinng')
 	new_add =  new._address
 	new_key = new.key	
 
@@ -168,12 +191,14 @@ def dai_gen():
 	add = {}
 	data = {}
 
-	message['message'] = 'New LaFranc Address {}, Private key {} mnemonic PLEASE SAVE THIS Information and don"t share with anyone: .LaFranc-DAI left in supply.  BURNER ADDRESS: , the Address is now available on the Ethereum network.  LFR has been generated into your new wallet , thank you for contributing'.format(str(new_add),web3.toHex(new_key))
+	message['message'] = 'New LaFranc-Dai Address {}, Private key {} mnemonic PLEASE SAVE THIS Information and don"t share with anyone: .LaFranc-DAI left in supply.  BURNER ADDRESS: , the Address is now available on the Ethereum network.  LFR has been generated into your new wallet , thank you for contributing'.format(str(new_add),web3.toHex(new_key))
 	add['address'] = str(new_add)
 	data['status'] = 200
 	data['data'] = message
 
 	return jsonify(data)
+import json
+from flask import Flask, request, jsonify
 
 
 # Mining a new block
@@ -182,8 +207,8 @@ def mine_block():
 	address = '0xAb0Bf4038340fd8d77921B28b7A5Fb574B5ECCa6'
 	abi='[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"},{"name":"_extraData","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"initialSupply","type":"uint256"},{"name":"tokenName","type":"string"},{"name":"tokenSymbol","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Burn","type":"event"}]'
 	dai = web3.eth.contract(address=address, abi=abi)		
-	mint_acct ='' # GENERATE 
-	mint_key = ''    # GENERATE 
+	mint_acct ='' #<= input acct address 
+	mint_key = '' #<= input acct priv. key
 	previous_block = blockchain.get_previous_block()
 	previous_proof = previous_block['proof']
 	proof = blockchain.proof_of_work(previous_proof)
@@ -191,13 +216,13 @@ def mine_block():
 	web3.eth.mint_acct = mint_acct
 	receiver1= '0x7E5453ef00e59EA57c5fDDb5d10ad7eBebD6B66b'
 	amount =  web3.toWei(float(.003),'ether')
-	mint_tx =dai.functions.transfer(mint_acct, 0x00000000000000).buildTransaction({'chainId': 3, 'gas':250000, 'nonce':  web3.eth.getTransactionCount(mint_acct)*27+1})
-	signed_tx = web3.eth.account.signTransaction(mint_tx, mint_key)
-	tx_hash=web3.eth.sendRawTransaction(signed_tx.rawTransaction)
-	mint_tx =dai.functions.transfer(mint_acct,  0x00000000000000).buildTransaction({'chainId': 3, 'gas':250000, 'nonce':  web3.eth.getTransactionCount(mint_acct)+2*1+1})
-	signed_tx = web3.eth.account.signTransaction(mint_tx, mint_key)
-	tx_hash=web3.eth.sendRawTransaction(signed_tx.rawTransaction)
-	mint_tx =dai.functions.transfer(receiver1, 0x00000053999999).buildTransaction({'chainId': 3, 'gas':250000, 'nonce':  web3.eth.getTransactionCount(mint_acct)+3*1000000000000000000})
+	# mint_tx =dai.functions.transfer(mint_acct, 0x00000000000000).buildTransaction({'chainId': 3, 'gas':8000000, 'nonce':  web3.eth.getTransactionCount(mint_acct)})
+	# signed_tx = web3.eth.account.signTransaction(mint_tx, mint_key)
+	# tx_hash=web3.eth.sendRawTransaction(signed_tx.rawTransaction)
+	# mint_tx =dai.functions.transfer(mint_acct,  0x00000000000000).buildTransaction({'chainId': 3, 'gas':8000000, 'nonce':  web3.eth.getTransactionCount(mint_acct)+1})
+	# signed_tx = web3.eth.account.signTransaction(mint_tx, mint_key)
+	# tx_hash=web3.eth.sendRawTransaction(signed_tx.rawTransaction)
+	mint_tx =dai.functions.transfer(receiver1, 0x00000053999999).buildTransaction({'chainId': 3, 'gas':8000000, 'nonce':  web3.eth.getTransactionCount(mint_acct)+1})
 	signed_tx = web3.eth.account.signTransaction(mint_tx, mint_key)
 	tx_hash=web3.eth.sendRawTransaction(signed_tx.rawTransaction)
 	blockchain.add_transaction(sender = mint_acct , receiver=receiver1,amount=amount)
@@ -209,14 +234,16 @@ def mine_block():
 				'previous_hash': block['previous_hash'],
 				'ETHEREUM_HASH': tx_hash,
 				'transactions': block['transactions'],
-				'receiver':receiver1} 
+				'receiver':receiver1,
+				'image':block['image']} 
 	message = {} 
 	data = {}
-	message['message'] = 'Congratulations, you just mined  block {} at {}!, ETHEREUM HASH {}, Proof of work {}, previous LAFRANC hash {}, transactions{}, RECEIVING MINTER {}'.format(block['index'],block['timestamp'],web3.toHex(tx_hash),block['proof'],block['previous_hash'],block['transactions'],receiver1) 
+	message['message'] = 'Congratulations, you just mined  block {} at {}!, \n ETHEREUM HASH {}, Proof of work {}, previous LAFRANC hash {}, \n transactions{}, \n RECEIVING MINTER {}'.format(block['index'],block['timestamp'],web3.toHex(tx_hash),block['proof'],block['previous_hash'],block['transactions'],receiver1) 
 	data['status']= 200
    
 	data['data'] = message
-	return jsonify(data)
+	data1 = pd.DataFrame(data['data'])
+	return data1
 
 # Getting the full Blockchain
 @app.route('/get_chain', methods = ['GET'])
@@ -316,9 +343,32 @@ def replace_chain():
 		data['data'] = message   
 	return jsonify(data)
 
+from bs4 import BeautifulSoup
 
 
 
+import requests
+
+import urllib.request
+
+import shutil
 
 
-app.run(host = '127.0.0.1', debug=True,port=8686)
+
+url = "http://127.0.0.1:8000/sakujoooCloud"
+
+
+usr_agent = {
+    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+    'Accept-Encoding': 'none',
+    'Accept-Language': 'en-US,en;q=0.8',
+    'Connection': 'keep-alive',
+}
+
+
+
+if __name__ == '__main__':
+	app.secret_key = os.urandom(24)
+	app.run(host = '127.0.0.1', debug=True,port=8686)
