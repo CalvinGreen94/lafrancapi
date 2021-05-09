@@ -105,12 +105,11 @@ mint_key = '' <- generate key for address<br />
 <h3>NUXT.JS FRONTEND</h3>
 
 <h5>NUXT.JS</h5> 
--Replace 8677 with node above 8685
 env: {
-    HOST_URL: process.env.HOST_URL || "http://127.0.0.1:8686/"
+    HOST_URL: process.env.HOST_URL || "http://127.0.0.1:8688/"
   },
 
   <br /><br /><br /><br /><br />
 
 <h3>nodes.json // transactions.json will be used when requesting a post request via POSTMAN/INSOMNIA</h3><br />
-<h2>to manage connected nodes run "http://127.0.0.1:8686/connect_node" with a post request via POSTMAN/INSOMNIA</h2>
+<h2>to manage connected nodes run "http://127.0.0.1:8688/connect_node" with a post request via POSTMAN/INSOMNIA</h2>
