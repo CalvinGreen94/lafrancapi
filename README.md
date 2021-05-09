@@ -2,7 +2,7 @@
 >LaFranc Blockchain/Cryptocurrency Operations have extra readMe in each folder.  
 > Make sure backend is running along frontend for operational node management 
 
-1.Launch LaFranc
+1.Launch LaFranc Node Client
 - npm run dev 
 
 
@@ -11,7 +11,7 @@
 - python lafranccoinof_8687.py
 - python lafranccoinof_8688.py 
 
-3.Launch Laravel Image Database
+3.Launch Laravel Image Client
 - php artisan serve
 
 
