@@ -47,7 +47,7 @@ export default {
     ]
   },
   env: {
-    HOST_URL: process.env.HOST_URL || "http://127.0.0.1:8678/"
+    HOST_URL: process.env.HOST_URL || "http://127.0.0.1:8688/"
   },
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
