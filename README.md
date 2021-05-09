@@ -2,7 +2,7 @@
 >LaFranc Blockchain/Cryptocurrency Operations have extra readMe in each folder.  
 > Make sure backend is running along frontend for operational node management 
 
-1.Launch LaFranc Node Client
+1.Launch LaFranc Node Client /* Nuxt.JS
 - npm run dev 
 
 
