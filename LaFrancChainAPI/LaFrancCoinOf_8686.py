@@ -236,7 +236,6 @@ def mine_block():
 				'transactions': block['transactions'],
 				'receiver':receiver1,
 				'image':block['image']} 
-				'image':block['image']} 
 	message = {} 
 	data = {}
 	message['message'] = 'Congratulations, you just mined  block {} at {} , \n ETHEREUM HASH {}, Proof of work {}, previous LAFRANC hash {}, \n transactions{}, \n RECEIVING MINTER {}, Containing these images {}!'.format(block['index'],block['timestamp'],web3.toHex(tx_hash),block['proof'],block['previous_hash'],block['transactions'],receiver1,block['image']) 
