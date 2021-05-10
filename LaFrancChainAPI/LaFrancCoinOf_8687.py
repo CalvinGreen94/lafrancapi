@@ -238,12 +238,12 @@ def mine_block():
 				'image':block['image']} 
 	message = {} 
 	data = {}
-	message['message'] = 'Congratulations, you just mined  block {} at {}!, \n ETHEREUM HASH {}, Proof of work {}, previous LAFRANC hash {}, \n transactions{}, \n RECEIVING MINTER {}'.format(block['index'],block['timestamp'],web3.toHex(tx_hash),block['proof'],block['previous_hash'],block['transactions'],receiver1) 
+	message['message'] = 'Congratulations, you just mined  block {} at {} , \n ETHEREUM HASH {}, Proof of work {}, previous LAFRANC hash {}, \n transactions{}, \n RECEIVING MINTER {}, Containing these images {}!'.format(block['index'],block['timestamp'],web3.toHex(tx_hash),block['proof'],block['previous_hash'],block['transactions'],receiver1,block['image']) 
 	data['status']= 200
    
 	data['data'] = message
-	data1 = pd.DataFrame(data['data'])
-	return data1
+	return jsonify(data)
+
 
 # Getting the full Blockchain
 @app.route('/get_chain', methods = ['GET'])
