@@ -331,7 +331,7 @@ def add_transaction():
 	data['data'] = message   
 	return jsonify(response),201
 
-### Decentralizing yappolaCoin 
+### Decentralizing LaFrancCoin 
 
 
 ###Connecting Nodes 
