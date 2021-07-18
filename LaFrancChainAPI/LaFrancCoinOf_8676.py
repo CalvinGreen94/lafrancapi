@@ -21,43 +21,21 @@ from flask import Flask, session,abort,request, jsonify, render_template,redirec
 import pickle
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler as mini
-import wolframalpha
-import wikipedia
+
 import os
 import stripe
 import datetime
 import subprocess
-import pyttsx3
-import tkinter
 import json
 import random
-import operator
-import speech_recognition as sr
 import datetime
-import webbrowser
-import winshell
-import pyjokes
-import feedparser
-import smtplib
 import ctypes
 import time
 import requests
-import shutil
-from twilio.rest import Client
-from clint.textui import progress
-from ecapture import ecapture as ec
 from bs4 import BeautifulSoup
-import win32com.client as wincl
 from urllib.request import urlopen
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
-from espeakng import ESpeakNG 
-import wave 
-# import pyaudio 
-# import StringIO
-engine = pyttsx3.init('sapi5')
-voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[1].id)
 daisy = 'dAIsy'
 app = Flask(__name__)
 app.secret_key = "You Come t0 m3 0n th3 dai 0f mah dAUghterZZzz wedDinng BITCH!"
