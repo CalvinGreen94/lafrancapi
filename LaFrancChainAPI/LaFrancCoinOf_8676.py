@@ -93,7 +93,7 @@ class LaFrancBlockchain:
 
 		mint_acct ='' #<= input acct address 
 		mint_key = '' #<= input acct priv. key	
-		receiver1= ''
+		receiver1= 'TXd7Bx2CyQ8c5C1BTberw6Fww8Mk4jnV1c'
 		
 		block = {'index': len(self.chain) + 1,
 				 'timestamp': str(datetime.datetime.now()),
@@ -147,7 +147,7 @@ class LaFrancBlockchain:
 		mint_acct =''
 		priv_key = PrivateKey(bytes.fromhex(""))
 		# web3.eth.mint_acct = mint_acct
-		receiver1= ''
+		receiver1= 'TXd7Bx2CyQ8c5C1BTberw6Fww8Mk4jnV1c'
 
 
 		previous_block = blockchain.get_previous_block()
@@ -247,7 +247,7 @@ def mine_block():
 	amount =  1
 	mint_acct =''
 	priv_key = PrivateKey(bytes.fromhex(""))
-	receiver1= ''
+	receiver1= 'TXd7Bx2CyQ8c5C1BTberw6Fww8Mk4jnV1c'
 	previous_block = blockchain.get_previous_block()
 	previous_proof = previous_block['proof']
 	proof = blockchain.proof_of_work(previous_proof)
@@ -401,7 +401,6 @@ usr_agent = {
     'Accept-Language': 'en-US,en;q=0.8',
     'Connection': 'keep-alive',
 }
-
 
 
 if __name__ == '__main__':
