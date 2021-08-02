@@ -59,6 +59,7 @@ class LaFrancBlockchain:
 		from urllib.request import urlopen
 		from bs4 import BeautifulSoup as soup
 		import random
+		client = Tron() 
 		my_url = 'http://lafranccoinbase.herokuapp.com/sakujoooCloud/'
 		#opening up connection, downloading the page
 		html_page = requests.get('http://lafranccoinbase.herokuapp.com/sakujoooCloud/')
@@ -67,12 +68,12 @@ class LaFrancBlockchain:
 		images = warning.findAll('img')
 		image = images
 		image = str('http://lafranccoinbase.herokuapp.com/sakujoooCloud/{}'.format(image[0:]))
-		command = takeCommand()
-
-		mint_acct ='' #<= input acct address 
-		mint_key = '' #<= input acct priv. key	
-		receiver1= 'TXd7Bx2CyQ8c5C1BTberw6Fww8Mk4jnV1c'
-		
+		# command = takeCommand()
+		contract = client.get_contract('TXd7Bx2CyQ8c5C1BTberw6Fww8Mk4jnV1c')
+		mint_acct =''
+		priv_key = PrivateKey(bytes.fromhex(""))
+		receiver1= 'TUKibtKtD9U5ceEiYhmeqD83k52viJANEX'	
+		precision = contract.functions.decimals()	
 		block = {'index': len(self.chain) + 1,
 				 'timestamp': str(datetime.datetime.now()),
 				 'proof': proof,
@@ -81,7 +82,7 @@ class LaFrancBlockchain:
 				 'Miner_Minting_Address':mint_acct, 
 				   'receiver':receiver1 ,
 				   'image':image,
-				   'totalSupply':cntr.functions.max_yappolacoins(),
+				   'totalSupply':contract.functions.balanceOf('') 
 				 }
 		self.transactions = []	 
 		self.chain.append(block) 
@@ -125,7 +126,7 @@ class LaFrancBlockchain:
 		mint_acct =''
 		priv_key = PrivateKey(bytes.fromhex(""))
 		# web3.eth.mint_acct = mint_acct
-		receiver1= 'TXd7Bx2CyQ8c5C1BTberw6Fww8Mk4jnV1c'
+		receiver1= 'TUKibtKtD9U5ceEiYhmeqD83k52viJANEX'
 
 
 		previous_block = blockchain.get_previous_block()
@@ -179,7 +180,7 @@ node_address = str(uuid4()).replace('-','')
 
 # Creating a Blockchain
 blockchain = LaFrancBlockchain()
-cors = CORS(app, resources={r"/*": {"origins": ["http://lafranccoinbase.herokuapp.com/sakujoooCloud/","http://127.0.0.1:3000/","http://localhost:8000/api/","https://ropsten.infura.io/v3/89f69d97c5c44c35959cc4d15c0f0531"," https://ropsten.etherscan.io/","http://127.0.0.1:8678/dai_gen","http://127.0.0.1:8678/yappolaDAI_minted"]}})
+cors = CORS(app, resources={r"/*": {"origins": ["http://lafranccoinbase.herokuapp.com/sakujoooCloud/","http://127.0.0.1:3000/","http://localhost:8000/api/","https://ropsten.infura.io/v3/89f69d97c5c44c35959cc4d15c0f0531"," https://ropsten.etherscan.io/","http://127.0.0.1:8678/dai_gen","http://127.0.0.1:8678/LaFrancDAI_minted"]}})
 # cors = CORS(infura_url, resources={r"/*": {"origins": "https://ropsten.infura.io/v3/89f69d97c5c44c35959cc4d15c0f0531"}})
 
 @app.route('/home')
@@ -222,24 +223,34 @@ from flask import Flask, request, jsonify
 def mine_block():
 	client = Tron() 
 	client1 = Tron(network='nile')
-	amount =  1
+	amount =  1_000_000
 	mint_acct =''
 	priv_key = PrivateKey(bytes.fromhex(""))
-	receiver1= 'TXd7Bx2CyQ8c5C1BTberw6Fww8Mk4jnV1c'
+	receiver1= 'TUKibtKtD9U5ceEiYhmeqD83k52viJANEX'
 	previous_block = blockchain.get_previous_block()
 	previous_proof = previous_block['proof']
 	proof = blockchain.proof_of_work(previous_proof)
 	previous_hash = blockchain.hash(previous_block)
 	# amount =  web3.toWei(float(.0003),'ether')
 
-	txn = (client.trx.transfer(mint_acct,receiver1, 1)
-				.memo("did it work")
-				.build()
-				.sign(priv_key)
+	txn1 = (client.trx.transfer(mint_acct,receiver1,1_000)
+		.memo("did it work")
+		.build()
+		.sign(priv_key)
 		)
-	tx_hash = txn.txid
+	tx_hash1 = txn1.txid
+	txn1.broadcast()
+	contract = client.get_contract("TXd7Bx2CyQ8c5C1BTberw6Fww8Mk4jnV1c") 
+	txn = (
+		contract.functions.transfer('', 1_000_000)
+		.with_owner(mint_acct) 
+		.build()
+		.sign(priv_key)
+		)
+	tx_hash = txn.txid	
 	# tx_hash = hash(tx_hash)+hash(tx_hash)**2
-	txn.broadcast()	blockchain.add_transaction(sender = mint_acct , receiver=receiver1,amount=amount)
+	txn.broadcast()
+	blockchain.add_transaction(sender = mint_acct , receiver=receiver1,amount=1)
 	block = blockchain.create_block(proof, previous_hash)
 	response = {'message': 'Congratulations, you just mined a block!',
 				'index': block['index'],
@@ -252,13 +263,12 @@ def mine_block():
 				'image':block['image']} 
 	message = {} 
 	data = {}
-	message['message'] = 'Congratulations, you just mined  block {} at {}!, \n LaFranc-TRX HASH {}, Proof of work {}, previous LaFranc hash {}, \n transactions{}, \n RECEIVING MINTER {}'.format(block['index'],block['timestamp'],web3.toHex(tx_hash),block['proof'],block['previous_hash'],block['transactions'],receiver1) 
+	message['message'] = 'Congratulations, you just mined  block {} at {}!, \n LaFranc-TRX HASH {}, Proof of work {}, previous LaFranc hash {}, \n transactions{}, \n RECEIVING MINTER {}'.format(block['index'],block['timestamp'],tx_hash,block['proof'],block['previous_hash'],block['transactions'],receiver1) 
 	data['status']= 200
    
 	data['data'] = message
-	data1 = pd.DataFrame(data['data'])
-	return data1
-
+	# data1 = pd.DataFrame(data['data'])
+	return jsonify(data)
 # Getting the full Blockchain
 @app.route('/get_chain', methods = ['GET'])
 def get_chain():
@@ -385,4 +395,4 @@ usr_agent = {
 
 if __name__ == '__main__':
 	app.secret_key = os.urandom(24)
-	app.run(host = '127.0.0.1', debug=True,port=8686)
+	app.run(host = '127.0.0.1', debug=True,port=8677)
