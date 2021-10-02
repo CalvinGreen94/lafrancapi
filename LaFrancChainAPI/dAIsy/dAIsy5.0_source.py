@@ -48,6 +48,25 @@ from qiskit.tools.monitor import job_monitor
 #                                    not b.configuration().simulator and b.status().operational==True))
 # backend = provider.get_backend('ibmq_manila')
 backend = provider.get_backend('ibmq_qasm_simulator')
+qc = QuantumCircuit(3,1)
+
+# First, let's initialize Alice's q0
+qc.append(init_gate, [0])
+qc.barrier()
+
+# Now begins the teleportation protocol
+create_bell_pair(qc, 1, 2)
+qc.barrier()
+# Send q1 to Alice and q2 to Bob
+alice_gates(qc, 0, 1)
+qc.barrier()
+# Alice sends classical bits to Bob
+new_bob_gates(qc, 0, 1, 2)
+
+# We undo the initialization process
+qc.append(inverse_init_gate, [2])
+t_qc = transpile(qc, backend, optimization_level=2)
+from tronpy.providers import HTTPProvider
 t_qc = transpile(qc, backend, optimization_level=2)
 from tronpy.providers import HTTPProvider
 
