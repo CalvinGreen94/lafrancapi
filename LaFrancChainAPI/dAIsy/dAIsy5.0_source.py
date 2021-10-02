@@ -44,10 +44,26 @@ provider
 provider.backends()
 from qiskit.providers.ibmq import least_busy
 from qiskit.tools.monitor import job_monitor
-# backend = least_busy(provider.backends(filters=lambda b: b.configuration().n_qubits >= 3 and
-#                                    not b.configuration().simulator and b.status().operational==True))
-# backend = provider.get_backend('ibmq_manila')
-backend = provider.get_backend('ibmq_qasm_simulator')
+psi = random_statevector(2)
+init_gate = Initialize(psi)
+init_gate.label = "init"
+backend = provider.get_backend('ibmq_manila')
+def create_bell_pair(qc, a, b):
+    """Creates a bell pair in qc using qubits a & b"""
+    qc.h(a) # Put qubit a into state |+>
+    qc.cx(a,b) # CNOT with a as control and b as target
+
+qr = QuantumRegister(3, name="q")
+crz, crx = ClassicalRegister(1, name="crz"), ClassicalRegister(1, name="crx")
+teleportation_circuit = QuantumCircuit(qr, crz, crx)
+create_bell_pair(teleportation_circuit, 1, 2)
+inverse_init_gate = init_gate.gates_to_uncompute()
+def alice_gates(qc, psi, a):
+    qc.cx(psi, a)
+    qc.h(psi)    
+def new_bob_gates(qc, a, b, c):
+    qc.cx(b, c)
+    qc.cz(a, c)
 qc = QuantumCircuit(3,1)
 
 # First, let's initialize Alice's q0
@@ -65,8 +81,11 @@ new_bob_gates(qc, 0, 1, 2)
 
 # We undo the initialization process
 qc.append(inverse_init_gate, [2])
-t_qc = transpile(qc, backend, optimization_level=2)
-from tronpy.providers import HTTPProvider
+# Alice sends classical bits to Bob
+new_bob_gates(qc, 0, 1, 2)
+
+# We undo the initialization process
+qc.append(inverse_init_gate, [2])
 t_qc = transpile(qc, backend, optimization_level=2)
 from tronpy.providers import HTTPProvider
 
